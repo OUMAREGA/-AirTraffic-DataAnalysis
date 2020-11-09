@@ -1,3 +1,6 @@
+#ignore airlines.ipynb
+airlines
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
