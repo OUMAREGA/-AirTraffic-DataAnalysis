@@ -7,6 +7,7 @@ class Connection:
         self.user='root',
         self.password='root',
         self.database='avions'
+        self.mydb = self.connection()
 
     
     def connection(self):
@@ -18,21 +19,32 @@ class Connection:
             database=self.database
         )
 
-        return connection.cursor()
+        return connection
 
 
     def create_airlines(self):
-        mycursor = self.connection()
+        mycursor = self.mydb.cursor()
+
 
         mycursor.execute("CREATE TABLE IF NOT EXISTS airlines (carrier CHAR(2) PRIMARY KEY, name VARCHAR(100) NOT NULL)")
 
+        mycursor.execute("""
+            LOAD DATA INFILE 'csv_data/airlines.csv'
+            INTO TABLE airlines
+            FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+            LINES TERMINATED BY '\n'
+            IGNORE 1 ROWS
+        """)
+        self.mydb.commit()
 
     def create_airports(self):
         mycursor = self.connection()
+        self.mydb.commit()
 
 
     def create_planes(self):
         mycursor = self.connection()
+        self.mydb.commit()
 
         mycursor.execute(
             "CREATE TABLE planes (tailnum CHAR(6) PRIMARY KEY,"
@@ -57,6 +69,7 @@ class Connection:
 
     def create_flights(self):
         mycursor = self.connection()
+        self.mydb.commit()
 
 
     def create_weather(self):
@@ -81,3 +94,13 @@ class Connection:
                 PRIMARY KEY (origin,year,month,day,hour)
             )
         """)
+
+        mycursor.execute("""
+            LOAD DATA INFILE '../csv_data/weather.csv'
+            INTO TABLE weather
+            FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+            LINES TERMINATED BY '\n'
+            IGNORE 1 ROWS
+        """)
+
+        self.mydb.commit()
