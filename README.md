@@ -7,6 +7,7 @@ MAIS en parallèle à un nombre croissant de dysfonctionnements :
 * retards
 * annulation de vols
 * passagers qui passent la nuit à l’aéroport etc
+
 et à d'éventuels autres problèmes à découvrir lors de votre fouille dans la DB
 
 Votre rôle est de donner le maximum d’éléments (reporting à partir des données du passé) pour prédire les problèmes et ainsi mieux se préparer (analyse prédictive).
