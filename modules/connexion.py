@@ -9,7 +9,7 @@ class Connection:
         self.database='avions'
 
     
-    def connection():
+    def connection(self):
         connection = db.connect(
             host=self.host,
             port=self.port,
@@ -21,25 +21,45 @@ class Connection:
         return connection.cursor()
 
 
-    def create_airlines():
+    def create_airlines(self):
         mycursor = self.connection()
 
         mycursor.execute("CREATE TABLE IF NOT EXISTS airlines (carrier CHAR(2) PRIMARY KEY, name VARCHAR(100) NOT NULL)")
 
 
-    def create_airports():
+    def create_airports(self):
         mycursor = self.connection()
 
 
-    def create_planes():
+    def create_planes(self):
+        mycursor = self.connection()
+
+        mycursor.execute(
+            "CREATE TABLE planes (tailnum CHAR(6) PRIMARY KEY,"
+            "YEAR YEAR(4) NOT NULL ,"
+            "type VARCHAR(50)  NOT NULL ,"
+            "manufacturer VARCHAR(20)  NOT NULL ,"
+            "model VARCHAR(20)  NOT NULL ,"
+            "engines TINYINT UNSIGNED  NOT NULL ,"
+            "seats TINYINT UNSIGNED  NOT NULL,"
+            "speed TINYINT UNSIGNED ,"
+            "engine VARCHAR(20)  NOT NULL)"
+        )
+
+        mycursor.execute("""
+                 LOAD DATA INFILE '../csv_data/planes.csv'
+                 INTO TABLE planes
+                 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+                 LINES TERMINATED BY '\n'
+                 IGNORE 1 ROWS
+             """)
+
+
+    def create_flights(self):
         mycursor = self.connection()
 
 
-    def create_flights():
-        mycursor = self.connection()
-
-
-    def create_weather():
+    def create_weather(self):
         mycursor = self.connection()
         mycursor.execute("""
             CREATE TABLE weather(
