@@ -7,9 +7,10 @@ class Connection:
         self.user='root',
         self.password='root',
         self.database='avions'
+        self.mydb = self.connection()
 
     
-    def connection():
+    def connection(self):
         connection = db.connect(
             host=self.host,
             port=self.port,
@@ -18,35 +19,39 @@ class Connection:
             database=self.database
         )
 
-        return connection.cursor()
+        return connection
 
 
-    def create_airlines():
-        mycursor = self.connection()
+    def create_airlines(self):
+        mycursor = self.mydb.cursor()
 
         mycursor.execute("CREATE TABLE IF NOT EXISTS airlines (carrier CHAR(2) PRIMARY KEY, name VARCHAR(100) NOT NULL)")
 
         mycursor.execute("""
-            LOAD DATA INFILE '../csv_data/airlines.csv'
+            LOAD DATA INFILE 'csv_data/airlines.csv'
             INTO TABLE airlines
             FIELDS TERMINATED BY ',' ENCLOSED BY '"'
             LINES TERMINATED BY '\n'
             IGNORE 1 ROWS
         """)
+        self.mydb.commit()
 
-    def create_airports():
+    def create_airports(self):
         mycursor = self.connection()
+        self.mydb.commit()
 
 
-    def create_planes():
+    def create_planes(self):
         mycursor = self.connection()
+        self.mydb.commit()
 
 
-    def create_flights():
+    def create_flights(self):
         mycursor = self.connection()
+        self.mydb.commit()
 
 
-    def create_weather():
+    def create_weather(self):
         mycursor = self.connection()
         mycursor.execute("""
             CREATE TABLE weather(
@@ -76,3 +81,5 @@ class Connection:
             LINES TERMINATED BY '\n'
             IGNORE 1 ROWS
         """)
+
+        self.mydb.commit()
