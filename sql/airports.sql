@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS airports (
+    faa CHAR(4) PRIMARY KEY, 
+    name VARCHAR(100) NOT NULL, 
+    lat FLOAT NOT NULL, 
+    lon FLOAT NOT NULL, 
+    alt SMALLINT NOT NULL, 
+    tz TINYINT NOT NULL, 
+    dst CHAR(1) NOT NULL, 
+    tzone VARCHAR(100) NOT NULL
+)
+
+LOAD DATA INFILE '/csv_data/airports.csv'
+INTO TABLE airports
+FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
