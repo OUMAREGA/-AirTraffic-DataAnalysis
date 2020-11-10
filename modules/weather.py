@@ -21,7 +21,7 @@ mycursor.execute("""
         dewp FLOAT NOT NULL,
         humid FLOAT UNSIGNED NOT NULL,
         wind_dir TINYINT UNSIGNED,
-        wind_speed FLOAT,
+        wind_speed FLOAT UNSIGNED,
         wind_gust FLOAT UNSIGNED,
         precip FLOAT UNSIGNED NOT NULL,
         pressure FLOAT UNSIGNED DEFAULT 0,
