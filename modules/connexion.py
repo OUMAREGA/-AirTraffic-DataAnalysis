@@ -47,7 +47,7 @@ class Connection:
         )
 
         mycursor.execute("""
-                 LOAD DATA INFILE '../csv_data/planes.csv'
+                 LOAD DATA INFILE '/csv_data/planes.csv'
                  INTO TABLE planes
                  FIELDS TERMINATED BY ',' ENCLOSED BY '"'
                  LINES TERMINATED BY '\n'
