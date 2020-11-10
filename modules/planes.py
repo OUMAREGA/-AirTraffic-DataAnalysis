@@ -14,12 +14,12 @@ mycursor = mydb.cursor()
 
 mycursor.execute(
   "CREATE TABLE planes (tailnum CHAR(6) PRIMARY KEY,"
-  "YEAR YEAR(4),"
-  "type VARCHAR(50),"
-  "manufacturer VARCHAR(20),"
-  "model VARCHAR(20),"
-  "engines SMALLINT ,"
-  "seats SMALLINT ,"
-  "speed SMALLINT ,"
-  "engine VARCHAR(20))"
+  "YEAR YEAR(4) NOT NULL ,"
+  "type VARCHAR(50)  NOT NULL ,"
+  "manufacturer VARCHAR(20)  NOT NULL ,"
+  "model VARCHAR(20)  NOT NULL ,"
+  "engines TINYINT UNSIGNED  NOT NULL ,"
+  "seats TINYINT UNSIGNED  NOT NULL,"
+  "speed TINYINT UNSIGNED  NOT NULL,"
+  "engine VARCHAR(20)  NOT NULL)"
 )
