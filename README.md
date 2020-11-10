@@ -1,5 +1,17 @@
 # Air traffic data analysis
 
+### Contexte
+L'Aéroports de Paris (ADP) fait en effet face à un trafic aérien en constante augmentation annuellement.
+MAIS en parallèle à un nombre croissant de dysfonctionnements : 
+
+* retards
+* annulation de vols
+* passagers qui passent la nuit à l’aéroport etc
+et à d'éventuels autres problèmes à découvrir lors de votre fouille dans la DB
+
+Votre rôle est de donner le maximum d’éléments (reporting à partir des données du passé) pour prédire les problèmes et ainsi mieux se préparer (analyse prédictive).
+L’objectif est d’aider votre manager à la prise de décision.· Votre rôle est de donner le maximum d’éléments (reporting à partir des données du passé) pour prédire les problèmes et ainsi mieux se préparer (analyse prédictive). L’objectif est d’aider votre manager à la prise de décision.
+
 ### Version
 
 ```
@@ -8,9 +20,21 @@ python -m pip --version
 ```
 
 ### Récupérez le projet
-Récupérez ce projet en local. En fonction de vos outils et de vos connaissances de Git,
-clonez le répertoire ou récupérez les sources dnas un zip. Vous pouvez placer le projet
-où vous le souhaitez dans votre arborescence.
+
+    git clone git@github.com:OUMAREGA/AirTrafficDataAnalysis.git
+    cd AirTrafficDataAnalysis
+    
+### Configurer le virtual env si nécessaire
+    
+    python3 -m venv ./venv
+    .\venv\Scripts\Activate.ps1 (Si vous êtes sur powershell)
+    .\venv\Scripts\Activate.bat (Sur tout autre shell windows)
+    source ./venv/bin/activate (Linux/Mac)
+    pip install ipython (Installe une coloration syntaxique dans l'environnement) 
+    
+### Démarrer la base de données
+
+    docker compose up   
 
 ### Installez les dépendances
 [pip](https://pypi.python.org/pypi/pip) est le gestionnaire de dépendances qui
