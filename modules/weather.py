@@ -26,7 +26,6 @@ mycursor.execute("""
         precip FLOAT UNSIGNED NOT NULL,
         pressure FLOAT UNSIGNED DEFAULT 0,
         visib FLOAT UNSIGNED NOT NULL,
-        time_hour DATETIME NOT NULL,
-        PRIMARY KEY (origin,year,month,day,hour)
+        time_hour DATETIME NOT NULL
     )
 """)
