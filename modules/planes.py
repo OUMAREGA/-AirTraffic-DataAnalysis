@@ -20,6 +20,6 @@ mycursor.execute(
   "model VARCHAR(20)  NOT NULL ,"
   "engines TINYINT UNSIGNED  NOT NULL ,"
   "seats TINYINT UNSIGNED  NOT NULL,"
-  "speed TINYINT UNSIGNED  NOT NULL,"
+  "speed TINYINT UNSIGNED ,"
   "engine VARCHAR(20)  NOT NULL)"
 )
