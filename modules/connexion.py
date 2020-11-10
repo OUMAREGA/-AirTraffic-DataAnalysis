@@ -26,6 +26,13 @@ class Connection:
 
         mycursor.execute("CREATE TABLE IF NOT EXISTS airlines (carrier CHAR(2) PRIMARY KEY, name VARCHAR(100) NOT NULL)")
 
+        mycursor.execute("""
+            LOAD DATA INFILE '/csv_data/airlines.csv'
+            INTO TABLE airlines
+            FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+            LINES TERMINATED BY '\n'
+            IGNORE 1 ROWS
+        """)
 
     def create_airports():
         mycursor = self.connection()
@@ -60,4 +67,12 @@ class Connection:
                 time_hour DATETIME NOT NULL,
                 PRIMARY KEY (origin,year,month,day,hour)
             )
+        """)
+
+        mycursor.execute("""
+            LOAD DATA INFILE '/csv_data/weather.csv'
+            INTO TABLE weather
+            FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+            LINES TERMINATED BY '\n'
+            IGNORE 1 ROWS
         """)
