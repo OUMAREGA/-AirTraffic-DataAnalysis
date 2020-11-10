@@ -39,12 +39,22 @@ class Connection:
 
     def create_airports(self):
         mycursor = self.connection()
+        
+        mycursor.execute("CREATE TABLE IF NOT EXISTS airports (faa CHAR(4) PRIMARY KEY, name VARCHAR(100) NOT NULL, lat FLOAT NOT NULL, lon FLOAT NOT NULL, alt SMALLINT NOT NULL, tz TINYINT NOT NULL, dst CHAR(1) NOT NULL, tzone VARCHAR(100) NOT NULL) ")
+
+        mycursor.execute("""
+            LOAD DATA INFILE '/csv_data/airports.csv'
+            INTO TABLE airports
+            FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+            LINES TERMINATED BY '\n'
+            IGNORE 1 ROWS
+        """)
+        
         self.mydb.commit()
 
 
     def create_planes(self):
         mycursor = self.connection()
-        self.mydb.commit()
 
         mycursor.execute(
             "CREATE TABLE planes (tailnum CHAR(6) PRIMARY KEY,"
@@ -66,6 +76,7 @@ class Connection:
                  IGNORE 1 ROWS
              """)
 
+        self.mydb.commit()
 
     def create_flights(self):
         mycursor = self.connection()
