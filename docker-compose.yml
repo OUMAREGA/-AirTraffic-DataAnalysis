@@ -19,6 +19,8 @@ services:
           container_name: phpmyadmin-local
           ports:
                - "30080:80"
+          volumes:
+               - ./csv_data:/csv_data
           environment: 
                PMA_HOST: mysql
                MYSQL_ROOT_PASSWORD: root
