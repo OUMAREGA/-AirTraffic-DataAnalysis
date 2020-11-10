@@ -12,4 +12,4 @@ mydb = db.connect(
 mycursor = mydb.cursor()
 
 #Création de la table airports
-mycursor.execute("CREATE TABLE IF NOT EXISTS airports (faa VARCHAR(100) PRIMARY KEY, name VARCHAR(100), lat FLOAT, lot FLOAT, alt VARCHAR(7), tz VARCHAR(4), dst VARCHAR(2), tzone VARCHAR(100)) ")
+mycursor.execute("CREATE TABLE IF NOT EXISTS airports (faa CHAR(4) PRIMARY KEY, name VARCHAR(100), lat FLOAT NOT NULL, lon FLOAT NOT NULL, alt VARCHAR(7), tz VARCHAR(4), dst CHAR(1), tzone VARCHAR(100)) ")
