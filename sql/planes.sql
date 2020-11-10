@@ -1,0 +1,17 @@
+CREATE TABLE planes (
+    tailnum CHAR(6) PRIMARY KEY,
+    year YEAR NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    manufacturer VARCHAR(50) NOT NULL,
+    model VARCHAR(50) NOT NULL,
+    engines TINYINT UNSIGNED NOT NULL,
+    seats SMALLINT UNSIGNED NOT NULL,
+    speed TINYINT UNSIGNED,
+    engine VARCHAR(20) NOT NULL
+)
+
+LOAD DATA INFILE '/csv_data/planes.csv'
+INTO TABLE planes
+FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
