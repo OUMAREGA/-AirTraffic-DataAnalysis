@@ -13,4 +13,4 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 #Création de la table airlines avec les champs : carrier et name
-mycursor.execute("CREATE TABLE IF NOT EXISTS airlines (carrier CHAR(2) PRIMARY KEY, name VARCHAR(100))")
+mycursor.execute("CREATE TABLE IF NOT EXISTS airlines (carrier CHAR(2) PRIMARY KEY, name VARCHAR(100) NOT NULL)")
