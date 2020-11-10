@@ -1,7 +1,7 @@
 import mysql.connector as db #import de mysql
 
 #connexion à la bdd
-mydb = mysql.connector.connect(
+mydb = db.connect(
   host="127.0.0.1",
   port="30000",
   user="root",
