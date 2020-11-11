@@ -1,4 +1,5 @@
 import os
+import util
 import mysql.connector as db
 from dotenv import load_dotenv
 from os.path import dirname, join
@@ -36,24 +37,32 @@ class Connection:
         return connection
 
 
-    def launch_script(self,script_name:str):
+    def create(self,table_name:str):
         """
-            Méthode permettant d'exécuter un script SQL
-            depuis le dossier sql
+            Méthode permettant de créer une table SQL
+            en s'appuyant sur le dictionnaire tables dans util
 
             Parameters
             ----------
-                script_name (str) : nom du script
+                table_name (str) : nom de la table
         """
-        try:
-            chemin_scripts_sql = join(racine, 'sql')
-            file = open(chemin_scripts_sql+f"/{script_name}.sql")
-            self.cursor.execute(file.read())
-            self.db.commit()
-        except Exception as e:
-            raise e
-        finally:
-            file.close()
+        if table_name in util.tables:
+            columns = ""
+            for index,column in enumerate(util.tables[table_name]["columns"]):
+                column_dict: dict = column
+                column_name = list(column_dict.keys()).pop()
+                column_data = column_dict[column_name]
+                columns = columns + column_name + " " + column_data["type"] + " "
+                if "options" in column_data:
+                    columns = columns + (" ".join(column_data["options"]))
+                if not index:
+                    columns = columns + ","
+            if "constraints" in util.tables[table_name]:
+                columns = columns + "," + ",".join(util.tables[table_name]["constraints"])
+            query = f"CREATE TABLE IF NOT EXISTS {table_name}({columns})"
+            print(query)
+        else:
+            raise Exception("Table à créer non répertoriée")
 
     # MÉTHODE TEMPORAIRE AVANT INTERPRÉTATION DES FICHIERS CSV
     # POUR RESPECTER LA COHÉRENCE DES TYPES DANS LA BASE DE DONNÉES
@@ -77,3 +86,5 @@ class Connection:
         """)
         self.db.commit()
 
+c = Connection()
+c.create("flights")
