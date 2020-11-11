@@ -16,9 +16,3 @@ CREATE TABLE weather(
     time_hour DATETIME NOT NULL,
     PRIMARY KEY (origin,`year`,`month`,`day`,hour)
 )
-
-LOAD DATA INFILE '../csv_data/weather.csv'
-INTO TABLE weather
-FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS
