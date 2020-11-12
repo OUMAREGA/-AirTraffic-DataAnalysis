@@ -103,7 +103,8 @@ class Connection:
                 minute TINYINT UNSIGNED NOT NULL,
                 time_hour DATETIME NOT NULL,
                 PRIMARY KEY (year,month,day,hour,flight),
-                FOREIGN KEY (origin) REFERENCES airports(faa))
+                FOREIGN KEY (origin) REFERENCES airports(faa),
+                FOREIGN KEY (dest) REFERENCES airports(faa)
             )
         """)
 
