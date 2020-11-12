@@ -62,6 +62,27 @@ Votre environnement contient alors toutes les dépendances nécessaires.
 ### Front-End : ReactJS
 
 ```
-cd src
-mlm install
+cd /src
+npm install
+```
+
+### Flask
+
+```
+cd /flask
+python	app.py
+```
+
+### Jupyter Notebooks
+
+Le répertoire workbooks contient les tests sql.
+
+Dans un terminal à partir du répertoire racine du projet, exécutez la commande
+
+```
+jupyter notebook
+```
+ou
+```
+python -m jupyter notebook
 ```
