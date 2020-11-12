@@ -115,9 +115,7 @@ class Connection:
             LINES TERMINATED BY '\n'
             IGNORE 1 ROWS
         """)
-
-        self.mydb.commit()
-
+        
         self.mydb.commit()
 
 
