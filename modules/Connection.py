@@ -1,11 +1,12 @@
 import mysql.connector as db
+import pandas as pd
 
 class Connection:
     def __init__(self):
-        self.host="localhost",
-        self.port="30000",
-        self.user='root',
-        self.password='root',
+        self.host="localhost"
+        self.port="30000"
+        self.user='root'
+        self.password='root'
         self.database='avions'
         self.mydb = self.connection()
 
@@ -54,7 +55,7 @@ class Connection:
 
 
     def create_planes(self):
-        mycursor = self.connection()
+        mycursor = self.mydb.cursor()
 
         mycursor.execute(
             "CREATE TABLE IF NOT EXISTS planes (tailnum CHAR(6) PRIMARY KEY,"
@@ -67,6 +68,13 @@ class Connection:
             "speed SMALLINT UNSIGNED ,"
             "engine VARCHAR(20)  NOT NULL)"
         )
+
+        df = pd.read_csv('../csv_data/planes.csv', index_col="tailnum")
+
+        df.loc[(df['speed'] == ' '), ['speed']] = 0  # default value if field is empty
+        df.loc[(df['year'] == ' '), ['year']]   = 1970 # default value if field is empty
+
+        df.to_csv('../csv_data/planes.csv')
 
         mycursor.execute("""
                  LOAD DATA INFILE '/csv_data/planes.csv'
