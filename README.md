@@ -58,3 +58,10 @@ python -m pip install -r requirements.txt
 ```
 
 Votre environnement contient alors toutes les dépendances nécessaires. 
+
+### Front-End : ReactJS
+
+```
+cd src
+mlm install
+```
