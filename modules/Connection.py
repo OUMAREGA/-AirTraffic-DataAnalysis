@@ -1,6 +1,8 @@
 import os
-import util
+from util.tables import TABLES
+from util.parser import parse_csv 
 import mysql.connector as db
+from sqlalchemy import create_engine
 from dotenv import load_dotenv
 from os.path import dirname, join
 
@@ -46,28 +48,29 @@ class Connection:
             ----------
                 table_name (str) : nom de la table
         """
-        if table_name in util.tables:
+        if table_name in TABLES:
             columns = ""
-            for index,column in enumerate(util.tables[table_name]["columns"]):
+            total_columns = len(TABLES[table_name]["columns"])
+            for index,column in enumerate(TABLES[table_name]["columns"]):
                 column_dict: dict = column
-                column_name = list(column_dict.keys()).pop()
-                column_data = column_dict[column_name]
-                columns = columns + column_name + " " + column_data["type"] + " "
+                column_name = column["name"]
+                column_data = column_dict["structure"]
+                columns = columns + column_name + " " + column_data["type"] + ("("+column_data["length"]+") " if "length" in column_data else " ")
                 if "options" in column_data:
                     columns = columns + (" ".join(column_data["options"]))
-                if not index:
+                if total_columns != index + 1: #si ce n'est pas la dernière colonne, on ajoute une virgule à la requête CREATE TABLE
                     columns = columns + ","
-            if "constraints" in util.tables[table_name]:
-                columns = columns + "," + ",".join(util.tables[table_name]["constraints"])
+            if "constraints" in TABLES[table_name]:
+                columns = columns + "," + ",".join(TABLES[table_name]["constraints"])
             query = f"CREATE TABLE IF NOT EXISTS {table_name}({columns})"
             print(query)
+            self.cursor.execute(query)
+           
         else:
             raise Exception("Table à créer non répertoriée")
 
-    # MÉTHODE TEMPORAIRE AVANT INTERPRÉTATION DES FICHIERS CSV
-    # POUR RESPECTER LA COHÉRENCE DES TYPES DANS LA BASE DE DONNÉES
 
-    def load_csv_data(self,table_name:str,csv_file:str):
+    def load_csv_data(self,table_name:str,csv_path:str):
         """
             Méthode permettant de charger des données
             CSV dans une table
@@ -77,14 +80,33 @@ class Connection:
                 table_name (str) : nom de la table qui doit recevoir les données
                 csv_file (str) : nom du fichier CSV
         """
-        self.cursor.execute(f"""
-            LOAD DATA INFILE '/csv_data/{csv_file}'
-            INTO TABLE {table_name}
-            FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-            LINES TERMINATED BY '\n'
-            IGNORE 1 ROWS
-        """)
-        self.db.commit()
+
+        sqlEngine = create_engine('mysql+pymysql://'+os.environ.get("DB_USER")+':'+os.environ.get("DB_PWD")+'@'+
+            os.environ.get("DB_HOST")+':'+os.environ.get("DB_PORT")+'/'+os.environ.get('DB_NAME'))
+        
+        dbConnection = sqlEngine.connect()
+
+        dataframe = parse_csv(dbConnection,table_name,csv_path)
+        dataframe.to_sql(table_name,con=sqlEngine,if_exists='append',index=False)
+
+        
 
 c = Connection()
-c.create("flights")
+try:
+    # c.create("airlines")
+    # c.load_csv_data("airlines","csv_data/airlines.csv")
+
+    c.create("airports")
+    c.load_csv_data("airports","csv_data/airports.csv")
+
+    c.create("planes")
+    c.load_csv_data("planes","csv_data/planes.csv")
+
+    c.create("flights")
+    c.load_csv_data("flights","csv_data/flights.csv")
+
+    c.create("weather")
+    c.load_csv_data("weather","csv_data/weather.csv")
+
+except Exception as e:
+    print("Erreur : ",e)                                                                                                                                                                
