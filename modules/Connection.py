@@ -57,14 +57,14 @@ class Connection:
         mycursor = self.connection()
 
         mycursor.execute(
-            "CREATE TABLE planes (tailnum CHAR(6) PRIMARY KEY,"
-            "YEAR YEAR(4) NOT NULL ,"
-            "type VARCHAR(50)  NOT NULL ,"
-            "manufacturer VARCHAR(20)  NOT NULL ,"
-            "model VARCHAR(20)  NOT NULL ,"
+            "CREATE TABLE IF NOT EXISTS planes (tailnum CHAR(6) PRIMARY KEY,"
+            "year YEAR(4) ,"
+            "type VARCHAR(100)  NOT NULL ,"
+            "manufacturer VARCHAR(100)  NOT NULL ,"
+            "model VARCHAR(25)  NOT NULL ,"
             "engines TINYINT UNSIGNED  NOT NULL ,"
-            "seats TINYINT UNSIGNED  NOT NULL,"
-            "speed TINYINT UNSIGNED ,"
+            "seats SMALLINT UNSIGNED  NOT NULL,"
+            "speed SMALLINT UNSIGNED ,"
             "engine VARCHAR(20)  NOT NULL)"
         )
 
