@@ -1,12 +1,19 @@
+#Structure des tables mis en dictionnaire
+#Il sera utile pour le traitement des CSV, car ces derniers ne constituent
+#que du texte, et ne sont donc pas typés par rapport à une table SQL
+
 TABLES = {
         "airlines": {
             "columns": [
+                #étant donné qu'il n'y a qu'une seule clé primaire, on peut directement la préciser en option de la colonne
+                #concernée
                 { "name": "carrier" ,"structure" : {"type": "CHAR", "length": "2","options" : ["PRIMARY KEY"] }},
                 { "name": "name" ,"structure" : {"type": "VARCHAR", "length": "100","options": ["NOT NULL"] }}
             ]
         },
         "airports": {
             "columns": [
+                #la faa doit comporter un format spécifique (au moins une lettre), on applique un attribut special_rule
                 {"name": "faa" ,"structure" : { "type": "CHAR", "length": "3", "options":["PRIMARY KEY"], "special_rule": "[A-Z]+" }},
                 {"name": "name" ,"structure" : { "type": "VARCHAR", "length": "100", "options":["NOT NULL"] }},
                 {"name": "lat" ,"structure" : {"type": "FLOAT", "options": ["NOT NULL"] }},
@@ -19,6 +26,9 @@ TABLES = {
         },
         "flights": {
             "columns": [
+                #l'attribut unique ne fait pas réellement partie de la création de la table
+                #mais peut trouver son utilité pour indiquer au traitement CSV que cette valeur ne doit pas se répéter
+                #ici il est utilisé car 'year' fait partie d'une clé primaire composite
                 {"name": "year" ,"structure" : {"type": "YEAR", "length": "4", "options": ["NOT NULL"], "unique": True }},
                 {"name": "month" ,"structure" : {"type": "TINYINT UNSIGNED", "options": ["NOT NULL"], "unique": True }},
                 {"name": "day" ,"structure" : {"type": "TINYINT UNSIGNED", "options": ["NOT NULL"], "unique": True }},
