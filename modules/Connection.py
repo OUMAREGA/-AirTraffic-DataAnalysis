@@ -13,38 +13,33 @@ class Connection:
     def __init__(self):
 
         load_dotenv(".env")
-        self.host = os.environ.get("DB_HOST")
-        self.database= os.environ.get("DB_NAME")
-        self.port = int(os.environ.get("DB_PORT"))
-        self.user = os.environ.get("DB_USER")
-        self.password = os.environ.get("DB_PWD")
-        self.db = self.connection()
-        self.cursor = self.db.cursor()
+        self.connection = db.connect(
+            host=os.environ.get("DB_HOST"),
+            port=int(os.environ.get("DB_PORT")),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PWD"),
+            database= os.environ.get("DB_NAME")
+        )
     
     def query(self,query: str,multiple=True):
         try:
-            self.cursor.execute(query)
-            result = self.cursor.fetchall() if multiple is True else self.cursor.fetchone()
+            cursor = self.cursor()
+            cursor.execute(query)
+            result = cursor.fetchall() if multiple is True else cursor.fetchone()
             return result
         except Exception as e:
             print(e)
+        finally:
+            cursor.close()
 
-    def connection(self):
+    def cursor(self):
         """
-            Méthode retournant l'objet MySQLConnection
+            Méthode retournant un curseur provenant de la connexion
             afin de pouvoir manipuler la base de données
             MariaDB/MySQL
         """
-        connection = db.connect(
-            host=self.host,
-            port=self.port,
-            user=self.user,
-            password=self.password,
-            database=self.database,
-            cursorclass=db.cursors.DictCursor
-        )
-
-        return connection
+    
+        return self.connection.cursor(db.cursors.DictCursor)
 
 
     def create(self,table_name:str):
@@ -57,6 +52,7 @@ class Connection:
                 table_name (str) : nom de la table
         """
         if table_name in TABLES:
+            cursor = self.cursor()
             columns = ""
             total_columns = len(TABLES[table_name]["columns"])
             for index,column in enumerate(TABLES[table_name]["columns"]):
@@ -72,8 +68,13 @@ class Connection:
                 columns = columns + "," + ",".join(TABLES[table_name]["constraints"])
             query = f"CREATE TABLE IF NOT EXISTS {table_name}({columns})"
             print(query)
-            self.cursor.execute(query)
-           
+            try:
+                cursor.execute(query)
+            except Exception as e:
+                print(e)
+            finally:
+                cursor.close()
+            
         else:
             raise Exception("Table à créer non répertoriée")
 
