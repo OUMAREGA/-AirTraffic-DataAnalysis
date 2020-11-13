@@ -1,7 +1,7 @@
 import os
 from util.tables import TABLES
 from util.parser import parse_csv 
-import mysql.connector as db
+import pymysql as db
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 from os.path import dirname, join
@@ -16,7 +16,7 @@ class Connection:
         
         self.host = os.environ.get("DB_HOST")
         self.database= os.environ.get("DB_NAME")
-        self.port = os.environ.get("DB_PORT")
+        self.port = int(os.environ.get("DB_PORT"))
         self.user = os.environ.get("DB_USER")
         self.password = os.environ.get("DB_PWD")
         self.db = self.connection()
@@ -93,20 +93,20 @@ class Connection:
 
 c = Connection()
 try:
-    # c.create("airlines")
-    # c.load_csv_data("airlines","csv_data/airlines.csv")
+    c.create("airlines")
+    c.load_csv_data("airlines","csv_data/airlines.csv")
 
-    # c.create("planes")
-    # c.load_csv_data("planes","csv_data/planes.csv")
+    c.create("planes")
+    c.load_csv_data("planes","csv_data/planes.csv")
 
-    # c.create("airports")
-    # c.load_csv_data("airports","csv_data/airports.csv")
+    c.create("airports")
+    c.load_csv_data("airports","csv_data/airports.csv")
 
-    # c.create("flights")
-    # c.load_csv_data("flights","csv_data/flights.csv")
+    c.create("flights")
+    c.load_csv_data("flights","csv_data/flights.csv")
 
-    # c.create("weather")
-    # c.load_csv_data("weather","csv_data/weather.csv")
+    c.create("weather")
+    c.load_csv_data("weather","csv_data/weather.csv")
 
 except Exception as e:
     print("Erreur : ",e)                                                                                                                                                                
