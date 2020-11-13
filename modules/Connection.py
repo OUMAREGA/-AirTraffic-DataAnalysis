@@ -91,22 +91,22 @@ class Connection:
 
         
 
-# c = Connection()
-# try:
-#     # c.create("airlines")
-#     # c.load_csv_data("airlines","csv_data/airlines.csv")
+c = Connection()
+try:
+    # c.create("airlines")
+    # c.load_csv_data("airlines","csv_data/airlines.csv")
 
-#     c.create("airports")
-#     c.load_csv_data("airports","csv_data/airports.csv")
+    # c.create("planes")
+    # c.load_csv_data("planes","csv_data/planes.csv")
 
-#     c.create("planes")
-#     c.load_csv_data("planes","csv_data/planes.csv")
+    # c.create("airports")
+    # c.load_csv_data("airports","csv_data/airports.csv")
 
-#     c.create("flights")
-#     c.load_csv_data("flights","csv_data/flights.csv")
+    # c.create("flights")
+    # c.load_csv_data("flights","csv_data/flights.csv")
 
-#     c.create("weather")
-#     c.load_csv_data("weather","csv_data/weather.csv")
+    # c.create("weather")
+    # c.load_csv_data("weather","csv_data/weather.csv")
 
-# except Exception as e:
-#     print("Erreur : ",e)                                                                                                                                                                
+except Exception as e:
+    print("Erreur : ",e)                                                                                                                                                                
