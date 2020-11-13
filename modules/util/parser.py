@@ -1,4 +1,4 @@
-from util.tables import TABLES
+from modules.util.tables import TABLES
 import pandas as pd
 import numpy as np
 from os.path import dirname

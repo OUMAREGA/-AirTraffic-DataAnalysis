@@ -1,6 +1,6 @@
 import os
-from util.tables import TABLES
-from util.parser import parse_csv 
+from modules.util.tables import TABLES
+from modules.util.parser import parse_csv 
 import pymysql as db
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
@@ -12,8 +12,7 @@ class Connection:
    
     def __init__(self):
 
-        load_dotenv(racine+"/.env")
-        
+        load_dotenv(".env")
         self.host = os.environ.get("DB_HOST")
         self.database= os.environ.get("DB_NAME")
         self.port = int(os.environ.get("DB_PORT"))
@@ -22,6 +21,14 @@ class Connection:
         self.db = self.connection()
         self.cursor = self.db.cursor()
     
+    def query(self,query: str,multiple=True):
+        try:
+            self.cursor.execute(query)
+            result = self.cursor.fetchall() if multiple is True else self.cursor.fetchone()
+            return result
+        except Exception as e:
+            print(e)
+
     def connection(self):
         """
             Méthode retournant l'objet MySQLConnection
@@ -33,7 +40,8 @@ class Connection:
             port=self.port,
             user=self.user,
             password=self.password,
-            database=self.database
+            database=self.database,
+            cursorclass=db.cursors.DictCursor
         )
 
         return connection
@@ -91,22 +99,3 @@ class Connection:
 
         
 
-c = Connection()
-try:
-    c.create("airlines")
-    c.load_csv_data("airlines","csv_data/airlines.csv")
-
-    c.create("planes")
-    c.load_csv_data("planes","csv_data/planes.csv")
-
-    c.create("airports")
-    c.load_csv_data("airports","csv_data/airports.csv")
-
-    c.create("flights")
-    c.load_csv_data("flights","csv_data/flights.csv")
-
-    c.create("weather")
-    c.load_csv_data("weather","csv_data/weather.csv")
-
-except Exception as e:
-    print("Erreur : ",e)                                                                                                                                                                
