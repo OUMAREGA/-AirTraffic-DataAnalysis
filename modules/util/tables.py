@@ -38,9 +38,9 @@ TABLES = {
                 {"name": "arr_delay" ,"structure" : { "type": "SMALLINT" }},
                 {"name": "arr_time" ,"structure" : { "type": "TIME", "options": ["NOT NULL"] }, "concat": "00"},
                 {"name": "sched_arr_time" ,"structure" : {"type": "TIME"}, "concat": "00"},
-                {"name": "carrier" ,"structure" : {"type": "CHAR", "length": "2", "options": ["NOT NULL"] }},
+                {"name": "carrier" ,"structure" : {"type": "CHAR", "length": "2", "references": {"table": "airlines", "index": "carrier"} }},
                 {"name": "flight" ,"structure" : {"type": "SMALLINT UNSIGNED", "unique": True }},
-                {"name": "tailnum" ,"structure" : {"type": "CHAR", "length": "6"}},
+                {"name": "tailnum" ,"structure" : {"type": "CHAR", "length": "6", "references": {"table": "planes", "index": "tailnum"} }},
                 {"name": "origin" ,"structure" : {"type":"CHAR", "length": "3", "options": ["NOT NULL"], "references": {"table": "airports", "index": "faa"} }},
                 {"name": "dest" ,"structure" : {"type": "CHAR", "length": "3", "options": ["NOT NULL"], "references": {"table": "airports", "index": "faa"}}},
                 {"name": "air_time" ,"structure" : {"type": "SMALLINT UNSIGNED"}},
@@ -51,8 +51,10 @@ TABLES = {
             ],
             "constraints": [
                 "PRIMARY KEY (`year`,`month`,`day`, hour, flight)",
-                "FOREIGN KEY (origin) REFERENCES airports(faa) ON DELETE CASCADE",
-                "FOREIGN KEY (dest) REFERENCES airports(faa) ON DELETE CASCADE"
+                "CONSTRAINT fk_flights_airports_origin FOREIGN KEY (origin) REFERENCES airports(faa) ON DELETE CASCADE",
+                "CONSTRAINT fk_flights_airports_dest FOREIGN KEY (dest) REFERENCES airports(faa) ON DELETE CASCADE",
+                "CONSTRAINT fk_flights_airlines_carrier FOREIGN KEY (carrier) REFERENCES airlines(carrier) ON DELETE CASCADE",
+                "CONSTRAINT fk_flights_planes_tailnum FOREIGN KEY (tailnum) REFERENCES planes(tailnum) ON DELETE CASCADE",
             ]
         },
         "planes": {
