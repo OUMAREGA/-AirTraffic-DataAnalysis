@@ -6,7 +6,7 @@ import DestinationNumber from '../components/Question2/DestinationNumber';
 import PlaneNumber from '../components/Question2/PlaneNumber';
 import TimezoneNumber from '../components/Question2/TimezoneNumber';
 import SummerHourUSA from '../components/Question3/SummerHourUSA';
-import DestLessToken from '../components/Question4/DestLessToken';
+import DestLessToken from '../components/Question4/DestLessTaken';
 import MostEmpruntedAirport from '../components/Question4/MostEmpruntedAirport';
 import PlanesLessBoarding from '../components/Question4/PlanesLessBoarding';
 import DestDesservedCarrier from '../components/Question5/DestDesservedCarrier';
