@@ -69,13 +69,16 @@ npm install
 ### Flask
 
 ```
-cd /flask
 python	app.py
 ```
 
-### Jupyter Notebooks
+ou
 
-Le répertoire workbooks contient les tests sql.
+```
+flask run
+```
+
+### Jupyter Notebooks
 
 Dans un terminal à partir du répertoire racine du projet, exécutez la commande
 
