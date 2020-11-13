@@ -1,7 +1,7 @@
 # Air traffic data analysis
 
 ### Contexte
-L'Aéroports de Paris (ADP) fait en effet face à un trafic aérien en constante augmentation annuellement.
+L'Aéroport de Paris (ADP) fait en effet face à un trafic aérien en constante augmentation annuellement.
 MAIS en parallèle à un nombre croissant de dysfonctionnements : 
 
 * retards
@@ -27,7 +27,7 @@ python -m pip --version
     
 ### Les fichiers csv
 
-<a href="https://onedrive.live.com/?authkey=%21ALM9Iew1PvlBqvM&id=6C6D756296D4662%21772304&cid=06C6D756296D4662" >Liens vers les fichiers csv</a>   
+<a href="https://onedrive.live.com/?authkey=%21ALM9Iew1PvlBqvM&id=6C6D756296D4662%21772304&cid=06C6D756296D4662" >Télécharger les liens vers les fichiers csv</a>   
     
 ### Configurer le virtual env si nécessaire
     
@@ -39,7 +39,7 @@ python -m pip --version
     
 ### Démarrer la base de données
 
-    docker compose up   
+    docker-compose up   
 
 ### Installez les dépendances
 [pip](https://pypi.python.org/pypi/pip) est le gestionnaire de dépendances qui
@@ -53,6 +53,7 @@ saisissez
 pip install -r requirements.txt
 ```
 ou
+
 ```
 python -m pip install -r requirements.txt
 ```
