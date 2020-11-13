@@ -1,24 +1,17 @@
-import logo from './assets/img/logo.svg';
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { router } from './router'
+import Header from './components/Header';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => <main>
+  <Header />
+  {
+    router.map( (props) =>
+      props.redirect
+      ? <Redirect from={props.pathname} to={props.to} />
+      : <Route path={props.pathname} component={props.components} />
+    )
+  }
+</main>
 
 export default App;
