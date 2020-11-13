@@ -4,4 +4,4 @@ const DestinationNumber = () => <p>
     Here number of destinations
 </p>
 
-export default DestinantionNumber;
+export default DestinationNumber;
