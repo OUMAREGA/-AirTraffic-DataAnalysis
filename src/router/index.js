@@ -22,6 +22,7 @@ import CarrierNotOriginAirports from '../components/Question8/CarrierNotOriginAi
 import ExclusiveDestinationsForCarrier from '../components/Question9/ExclusiveDestinationsForCarrier';
 import UnitedFlight from '../components/Question10/UnitedFlight';
 import TableForDest from '../components/Question8/TableForDest';
+import DestLessTaken from '../components/Question4/DestLessTaken';
 
 export const router = [
     { pathname: "/home",                                name: "Home",                               components: Home },
@@ -31,7 +32,7 @@ export const router = [
     { pathname: "/plane-number",                        name: "PlaneNumber",                        components: PlaneNumber },
     { pathname: "/timezone-number",                     name: "TimezoneNumber",                     components: TimezoneNumber },
     { pathname: "/summer-hour-usa",                     name: "SummerHourUSA",                      components: SummerHourUSA },
-    { pathname: "/dest-less-token",                     name: "DestLessToken",                      components: DestLessToken },
+    { pathname: "/dest-less-taken",                     name: "DestLessTaken",                      components: DestLessTaken },
     { pathname: "/most-emprunted-airport",              name: "MostEmpruntedAirport",               components: MostEmpruntedAirport },
     { pathname: "/planes-less-boarding",                name: "PlanesLessBoarding",                 components: PlanesLessBoarding },
     { pathname: "/dest-desserved-carrier",              name: "DestDesservedCarrier",               components: DestDesservedCarrier },

@@ -39,7 +39,7 @@ const Header = () => <header>
             <NavLink to="/destination-number">Nombre de destinations</NavLink>
             <NavLink to="/timezone-number">Nombre de fuseaux horaire</NavLink>
             <NavLink to="/summer-hour-usa">Zones USA où on ne passe pas à l’heure d’été</NavLink>
-            <NavLink to="/dest-less-token">10 destinations les moins prisées</NavLink>
+            <NavLink to="/dest-less-taken">10 destinations les moins prisées</NavLink>
             <NavLink to="/dest-desserved-carrier">Destinations desservies par chaque compagnie</NavLink>
             <NavLink to="/exclusive-destinations-for-carrier">Destinations qui sont exclusives à certaines compagnies</NavLink>
             </div>
@@ -61,7 +61,7 @@ const Header = () => <header>
             </div>
         </li>
         <li className="dropdown">
-            <NavLink to="/grafics" className="dropbtn">Graphiques</NavLink>
+            <NavLink to="/grafic" className="dropbtn">Graphiques</NavLink>
         </li>
         </ul>
     </div>
