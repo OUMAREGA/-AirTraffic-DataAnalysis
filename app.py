@@ -35,7 +35,7 @@ def TimezoneNumber():
 
 @app.route('/summer-hour-usa', methods=['GET'])
 def SummerHourUSA():
-    return jsonify(conn.query("SELECT * FROM airports WHERE tzone LIKE 'America%' OR tzone LIKE 'Pacific%' AND dst='N'"))
+    return jsonify(conn.query("SELECT * FROM airports WHERE (tzone LIKE 'America%' OR tzone LIKE 'Pacific%') AND dst='N'"))
 
 @app.route('/dest-less-taken', methods=['GET'])
 def DestLessTaken():
