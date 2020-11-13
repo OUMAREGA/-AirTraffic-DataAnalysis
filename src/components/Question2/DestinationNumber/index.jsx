@@ -9,8 +9,7 @@ export default class DestinationNumber extends React.Component {
   componentDidMount() {
     axios.get(`http://127.0.0.1:5000/destination-number`)
       .then(res => {
-        console.log("res",res)
-        const result = res
+        const result = res.data
         this.setState({ result });
       })
   }
@@ -18,7 +17,7 @@ export default class DestinationNumber extends React.Component {
   render() {
     return (
       <ul>
-        <li>ici</li>
+        <li>Il y a en tout { this.state.result.dest_number } destinations desservies</li>
       </ul>
     )
   }
