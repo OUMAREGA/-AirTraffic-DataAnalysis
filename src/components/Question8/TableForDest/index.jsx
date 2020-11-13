@@ -1,7 +1,7 @@
 import React from 'react';
 
-const DestLessToken = () => <p>
+const TableForDest = () => <p>
     aéroport de départ le plus emprunté
 </p>
 
-export default DestLessToken;
+export default TableForDest;
