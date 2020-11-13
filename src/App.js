@@ -1,8 +1,10 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { router } from './router'
+import Header from './components/Header';
 
-const App = () => <div>
+const App = () => <main>
+  <Header />
   {
     router.map( (props) =>
       props.redirect
@@ -10,6 +12,6 @@ const App = () => <div>
       : <Route path={props.pathname} component={props.components} />
     )
   }
-</div>
+</main>
 
 export default App;

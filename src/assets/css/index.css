@@ -11,3 +11,115 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
 }
+
+header{
+  background: #222222;
+  display: flex;
+  margin: 50px 0px;
+}
+
+main{
+  background: #FFFFFF;
+}
+
+.logo-header{
+  width: 150px;
+  padding: 5px 50px;
+}
+
+.modify-padding {
+	padding: 14px 0px !important;
+}
+
+#navbar {
+  width: 100%;
+}
+
+#navbar ul {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 18px;
+}
+#navbar li a, .dropbtn {
+  display: inline-block;
+  color: #f15e2c;
+  padding: 13px 20px;
+  text-decoration: none;
+}
+#navbar li a:hover, .dropdown:hover .dropbtn {
+  color: #c8202c;
+}
+.menu {
+    position: relative;
+}
+#navbar li.dropdown {
+    display: inline-block;
+    margin: 0px 20px;
+}
+#navbar .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 250px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+#navbar .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+#navbar .dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+#navbar .dropdown:hover .dropdown-content {
+    display: block;
+}
+#navbar .sub-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 250px;
+    top: 0;
+    left: 250px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+#navbar .sub-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+#navbar .sub-menu a:hover {
+    background-color: #f1f1f1;
+}
+#navbar .menu:hover .sub-menu {
+    display: block;
+}
+.right_menu_btn {
+    position: absolute;
+    width: 52px;
+    height: 45px;
+    top: 0;
+    left: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: yellow;;
+}
+.change-icon:hover .right_menu_btn {
+	background: red;
+}
+.modify-show {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 46px;
+	right: -102px;
+	min-width: 150px !important;
+}
+.modify-show a {
+	text-align: right !important;
+}
