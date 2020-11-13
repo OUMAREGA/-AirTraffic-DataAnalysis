@@ -1,16 +1,33 @@
+import os
+from util.tables import TABLES
+from util.parser import parse_csv 
 import mysql.connector as db
+from sqlalchemy import create_engine
+from dotenv import load_dotenv
+from os.path import dirname, join
+
+racine = dirname(dirname(__file__))
 
 class Connection:
+   
     def __init__(self):
-        self.host="localhost"
-        self.port="30000"
-        self.user='root'
-        self.password='root'
-        self.database='avions'
-        self.mydb = self.connection()
 
+        load_dotenv(racine+"/.env")
+        
+        self.host = os.environ.get("DB_HOST")
+        self.database= os.environ.get("DB_NAME")
+        self.port = os.environ.get("DB_PORT")
+        self.user = os.environ.get("DB_USER")
+        self.password = os.environ.get("DB_PWD")
+        self.db = self.connection()
+        self.cursor = self.db.cursor()
     
     def connection(self):
+        """
+            Méthode retournant l'objet MySQLConnection
+            afin de pouvoir manipuler la base de données
+            MariaDB/MySQL
+        """
         connection = db.connect(
             host=self.host,
             port=self.port,
@@ -22,132 +39,74 @@ class Connection:
         return connection
 
 
-    def create_airlines(self):
-        mycursor = self.mydb.cursor()
+    def create(self,table_name:str):
+        """
+            Méthode permettant de créer une table SQL
+            en s'appuyant sur le dictionnaire tables dans util
+
+            Parameters
+            ----------
+                table_name (str) : nom de la table
+        """
+        if table_name in TABLES:
+            columns = ""
+            total_columns = len(TABLES[table_name]["columns"])
+            for index,column in enumerate(TABLES[table_name]["columns"]):
+                column_dict: dict = column
+                column_name = column["name"]
+                column_data = column_dict["structure"]
+                columns = columns + column_name + " " + column_data["type"] + ("("+column_data["length"]+") " if "length" in column_data else " ")
+                if "options" in column_data:
+                    columns = columns + (" ".join(column_data["options"]))
+                if total_columns != index + 1: #si ce n'est pas la dernière colonne, on ajoute une virgule à la requête CREATE TABLE
+                    columns = columns + ","
+            if "constraints" in TABLES[table_name]:
+                columns = columns + "," + ",".join(TABLES[table_name]["constraints"])
+            query = f"CREATE TABLE IF NOT EXISTS {table_name}({columns})"
+            print(query)
+            self.cursor.execute(query)
+           
+        else:
+            raise Exception("Table à créer non répertoriée")
 
 
-        mycursor.execute("CREATE TABLE IF NOT EXISTS airlines (carrier CHAR(2) PRIMARY KEY, name VARCHAR(100) NOT NULL)")
+    def load_csv_data(self,table_name:str,csv_path:str):
+        """
+            Méthode permettant de charger des données
+            CSV dans une table
 
-        mycursor.execute("""
-            LOAD DATA INFILE '/csv_data/airlines.csv'
-            INTO TABLE airlines
-            FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-            LINES TERMINATED BY '\n'
-            IGNORE 1 ROWS
-        """)
-        self.mydb.commit()
+            Parameters
+            ----------
+                table_name (str) : nom de la table qui doit recevoir les données
+                csv_file (str) : nom du fichier CSV
+        """
 
-    def create_airports(self):
-        mycursor = self.mydb.cursor()
+        sqlEngine = create_engine('mysql+pymysql://'+os.environ.get("DB_USER")+':'+os.environ.get("DB_PWD")+'@'+
+            os.environ.get("DB_HOST")+':'+os.environ.get("DB_PORT")+'/'+os.environ.get('DB_NAME'))
         
-        mycursor.execute("CREATE TABLE IF NOT EXISTS airports (faa CHAR(4) PRIMARY KEY, name VARCHAR(100) NOT NULL, lat FLOAT NOT NULL, lon FLOAT NOT NULL, alt SMALLINT NOT NULL, tz TINYINT NOT NULL, dst CHAR(1) NOT NULL, tzone VARCHAR(100)) ")
+        dbConnection = sqlEngine.connect()
 
-        mycursor.execute("""
-            LOAD DATA INFILE '/csv_data/airports.csv'
-            INTO TABLE airports
-            FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-            LINES TERMINATED BY '\n'
-            IGNORE 1 ROWS
-        """)
+        dataframe = parse_csv(dbConnection,table_name,csv_path)
+        dataframe.to_sql(table_name,con=sqlEngine,if_exists='append',index=False)
+
         
-        self.mydb.commit()
 
+# c = Connection()
+# try:
+#     # c.create("airlines")
+#     # c.load_csv_data("airlines","csv_data/airlines.csv")
 
-    def create_planes(self):
-        mycursor = self.connection()
+#     c.create("airports")
+#     c.load_csv_data("airports","csv_data/airports.csv")
 
-        mycursor.execute(
-            "CREATE TABLE IF NOT EXISTS planes (tailnum CHAR(6) PRIMARY KEY,"
-            "year YEAR(4) ,"
-            "type VARCHAR(100)  NOT NULL ,"
-            "manufacturer VARCHAR(100)  NOT NULL ,"
-            "model VARCHAR(25)  NOT NULL ,"
-            "engines TINYINT UNSIGNED  NOT NULL ,"
-            "seats SMALLINT UNSIGNED  NOT NULL,"
-            "speed SMALLINT UNSIGNED ,"
-            "engine VARCHAR(20)  NOT NULL)"
-        )
+#     c.create("planes")
+#     c.load_csv_data("planes","csv_data/planes.csv")
 
-        mycursor.execute("""
-                 LOAD DATA INFILE '/csv_data/planes.csv'
-                 INTO TABLE planes
-                 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-                 LINES TERMINATED BY '\n'
-                 IGNORE 1 ROWS
-             """)
+#     c.create("flights")
+#     c.load_csv_data("flights","csv_data/flights.csv")
 
-        self.mydb.commit()
+#     c.create("weather")
+#     c.load_csv_data("weather","csv_data/weather.csv")
 
-    def create_flights(self):
-        mycursor = self.connection()
-
-        mycursor.execute("""
-            CREATE TABLE flights(
-                year YEAR(4) NOT NULL,
-                month TINYINT UNSIGNED NOT NULL,
-                day TINYINT UNSIGNED NOT NULL,
-                dep_time TIME,
-                sched_dep_time TIME,
-                dep_delay SMALLINT,
-                arr_delay SMALLINT,
-                arr_time TIME NOT NULL,
-                sched_arr_time TIME,
-                carrier CHAR(2) NOT NULL,
-                flight SMALLINT UNSIGNED,
-                tailnum CHAR(6),
-                origin CHAR(3) NOT NULL,
-                dest CHAR(3) NOT NULL,
-                air_time SMALLINT UNSIGNED,
-                distance SMALLINT UNSIGNED NOT NULL,
-                hour TINYINT UNSIGNED NOT NULL,
-                minute TINYINT UNSIGNED NOT NULL,
-                time_hour DATETIME NOT NULL,
-                PRIMARY KEY (year,month,day,hour,flight),
-                FOREIGN KEY (origin) REFERENCES airports(faa),
-                FOREIGN KEY (dest) REFERENCES airports(faa)
-            )
-        """)
-
-        mycursor.execute("""
-            LOAD DATA INFILE '/csv_data/flights.csv'
-            INTO TABLE flights
-            FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-            LINES TERMINATED BY '\n'
-            IGNORE 1 ROWS
-        """)
-        
-        self.mydb.commit()
-
-
-    def create_weather(self):
-        mycursor = self.connection()
-        mycursor.execute("""
-            CREATE TABLE weather(
-                origin CHAR(3) NOT NULL,
-                year YEAR(4) NOT NULL,
-                month TINYINT UNSIGNED NOT NULL,
-                day TINYINT UNSIGNED NOT NULL,
-                hour TINYINT UNSIGNED NOT NULL,
-                temp FLOAT UNSIGNED NOT NULL,
-                dewp FLOAT NOT NULL,
-                humid FLOAT UNSIGNED NOT NULL,
-                wind_dir TINYINT UNSIGNED NOT NULL,
-                wind_speed FLOAT,
-                wind_gust FLOAT UNSIGNED,
-                precip FLOAT UNSIGNED NOT NULL,
-                pressure FLOAT UNSIGNED DEFAULT 0,
-                visib FLOAT UNSIGNED NOT NULL,
-                time_hour DATETIME NOT NULL,
-                PRIMARY KEY (origin,year,month,day,hour)
-            )
-        """)
-
-        mycursor.execute("""
-            LOAD DATA INFILE '/csv_data/weather.csv'
-            INTO TABLE weather
-            FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-            LINES TERMINATED BY '\n'
-            IGNORE 1 ROWS
-        """)
-
-        self.mydb.commit()
+# except Exception as e:
+#     print("Erreur : ",e)                                                                                                                                                                
