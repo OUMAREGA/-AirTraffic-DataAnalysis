@@ -47,7 +47,7 @@ def DestMoreTaken():
 
 @app.route('/most-emprunted-airport', methods=['GET'])
 def MostEmpruntedAirport():
-    return jsonify(conn.query("SELECT COUNT(origin) as Nbr, dest FROM `flights` GROUP BY dest ORBER BY Nbr DESC LIMIT 10"))
+    return jsonify(conn.query("SELECT COUNT(origin) as `Nbr`, dest FROM `flights` GROUP BY dest ORDER BY `Nbr` DESC LIMIT 10"))
 
 @app.route('/planes-less-boarding', methods=['GET'])
 def PlanesLessBoarding():
