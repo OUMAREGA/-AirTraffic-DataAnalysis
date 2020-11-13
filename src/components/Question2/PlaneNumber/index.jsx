@@ -1,7 +1,25 @@
 import React from 'react';
+import axios from 'axios';
 
-const PlaneNumber = () => <p>
-    Here number of Planes
-</p>
+export default class PlaneNumber extends React.Component {
+  state = {
+    result: {}
+  }
 
-export default PlaneNumber;
+  componentDidMount() {
+    axios.get(`http://127.0.0.1:5000/plane-number`)
+      .then(res => {
+        console.log("res",res)
+        const result = res
+        this.setState({ result });
+      })
+  }
+
+  render() {
+    return (
+      <ul>
+        <li>ici</li>
+      </ul>
+    )
+  }
+}
