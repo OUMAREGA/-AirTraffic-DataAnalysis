@@ -7,11 +7,13 @@ import Footer from './components/Footer';
 const App = () => <main>
   <Header />
   {
-    router.map( (props) =>
+    <div id="page-container">
+    { router.map( (props) =>
       props.redirect
       ? <Redirect from={props.pathname} to={props.to} />
       : <Route path={props.pathname} component={props.components} />
-    )
+    )}
+    </div>
   }
   <Footer />
 </main>

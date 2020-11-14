@@ -17,9 +17,9 @@ export default class AirportNumber extends React.Component {
 
   render() {
     return (
-      <ul>
-        <li>Il y a en tout { this.state.result.airport_number } aéroports</li>
-      </ul>
+      <div className="title">
+        { this.state.result.airport_number ? <h2>Il y a en tout { this.state.result.airport_number } aéroports</h2> : <h2 className='title'><h2 className='title'>Récupération des données...</h2></h2> }
+      </div>
     )
   }
 }

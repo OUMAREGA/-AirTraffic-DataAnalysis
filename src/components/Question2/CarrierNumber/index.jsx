@@ -17,9 +17,9 @@ export default class CarriertNumber extends React.Component {
 
   render() {
     return (
-      <ul>
-        <li>Il y a en tout { this.state.result.carrier_number } compagnies aériennes</li>
-      </ul>
+      <div className="title">
+        { this.state.result.carrier_number ? <h2>Il y a en tout compagnies { this.state.result.carrier_number } aériennes</h2> : "Récupération en cours..." }
+      </div>
     )
   }
 }

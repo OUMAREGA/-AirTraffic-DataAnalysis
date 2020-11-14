@@ -38,7 +38,7 @@ export default class DestLesstaken extends React.Component {
               <td>{object.lon}</td>
               <td>{object.name}</td>
               <td>{object.tz}</td>
-          </tr>)) : "Récupération des données..."
+          </tr>)) : <h2 class="title">Récupération des données..."</h2>
         
         }
         </table>

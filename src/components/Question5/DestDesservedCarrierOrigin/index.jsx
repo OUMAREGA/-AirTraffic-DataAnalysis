@@ -32,7 +32,7 @@ export default class DestDesservedCarrierOrigin extends React.Component {
                 <td>{object.carrier}</td>
                 <td>{object.name}</td>
                 <td>{object.nbr_origin}</td>
-            </tr>)) : "Récupération des données..."
+            </tr>)) : <h2 className='title'>Récupération des données...</h2>
           
           }
           </table>

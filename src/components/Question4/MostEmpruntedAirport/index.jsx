@@ -18,18 +18,19 @@ export default class MostEmpruntedAirport extends React.Component {
   render() {
     return (
       <div style={{ margin: "auto", textAlign: "center" }}>
-        <table style={{border: "1px solid black", textAlign: "center", padding: "5px", width: "50%", margin:"auto" }}>
+       { this.state.result.length > 0 ? <h3>Les {this.state.result.length} aéroports les plus empruntés sont les suivants</h3> : null}
+         <table style={{border: "1px solid black", textAlign: "center", padding: "5px", width: "50%", margin:"auto" }}>
         <tr style={{border: "1px solid black", textAlign: "center", padding: "10px"}}>
           <th>Nombre de fois</th>
           <th>Aéroport de départ</th>
         </tr>
         {
-          this.state.result.length > 0 ? 
-          this.state.result.map((object,i) => (
+          
+          this.state.result.length > 0 ? this.state.result.map((object,i) => (
           <tr key={i}>
               <td>{object.Nbr}</td>
               <td>{object.dest}</td>
-          </tr>)) : "Récupération des données..."
+          </tr>)) : <h2 class="title">Récupération des données...</h2>
         
         }
         </table>

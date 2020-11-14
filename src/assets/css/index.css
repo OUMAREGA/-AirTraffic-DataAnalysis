@@ -155,3 +155,13 @@ main{
   justify-content: space-around;
   margin-top: 30px;
 }
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+
+.title {
+  text-align: center;
+}
