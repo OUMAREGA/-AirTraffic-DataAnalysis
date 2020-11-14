@@ -83,6 +83,7 @@ Votre environnement contient alors toutes les dépendances nécessaires.
 ```
 cd /src
 npm install
+npm start
 ```
 
 ### Flask
