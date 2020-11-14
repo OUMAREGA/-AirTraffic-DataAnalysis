@@ -27,8 +27,11 @@ python -m pip --version
     
 ### Les fichiers csv
 
-<a href="https://onedrive.live.com/?authkey=%21ALM9Iew1PvlBqvM&id=6C6D756296D4662%21772304&cid=06C6D756296D4662" >Télécharger les liens vers les fichiers csv</a>   
-    
+<a href="https://onedrive.live.com/?authkey=%21ALM9Iew1PvlBqvM&id=6C6D756296D4662%21772304&cid=06C6D756296D4662" >Pour télécharger les fichiers CSV</a>   
+
+Après téléchargement, veuillez les mettre dans le dossier **csv_data**.
+
+
 ### Configurer le virtual env si nécessaire
     
     python3 -m venv ./venv
@@ -39,8 +42,23 @@ python -m pip --version
     
 ### Démarrer la base de données
 
-    docker-compose up   
+    docker-compose up
 
+### Joindre la base de données à PyMySQL
+
+Il est nécessaire à ce que PyMySQL puisse contacter la base de données, 
+que ça soit pour l'importation des fichiers ou l'exécution des requêtes.
+
+**Pour ce faire :**
+- Copier le fichier .env.dist en **.env**
+- Remplir chaque variable de la manière suivante :
+```env
+DB_HOST=localhost
+DB_PORT=30000
+DB_NAME=avions
+DB_USER=root
+DB_PWD=root
+```
 ### Installez les dépendances
 [pip](https://pypi.python.org/pypi/pip) est le gestionnaire de dépendances qui
 va nous permettre d'installer tout ce qui est nécessaire à ce projet. Vous
@@ -77,6 +95,12 @@ ou
 
 ```
 flask run
+```
+
+### Importation des données CSV
+
+```
+python import.py
 ```
 
 ### Jupyter Notebooks
