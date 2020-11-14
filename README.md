@@ -1,17 +1,17 @@
 # Air traffic data analysis
 
 ### Contexte
-L'Aéroport de Paris (ADP) fait en effet face à un trafic aérien en constante augmentation annuellement.
-MAIS en parallèle à un nombre croissant de dysfonctionnements : 
+L'Aéroport de Paris (ADP) fait face à un trafic aérien en augmentation constante annuellement.
+MAIS aussi en parallèle à un nombre croissant de dysfonctionnements : 
 
 * retards
 * annulation de vols
-* passagers qui passent la nuit à l’aéroport etc
+* passagers qui passent la nuit à l’aéroport etc.
 
-et à d'éventuels autres problèmes à découvrir lors de votre fouille dans la DB
+et à d'autres problèmes éventuels à découvrir lors de votre fouille dans la DB
 
 Votre rôle est de donner le maximum d’éléments (reporting à partir des données du passé) pour prédire les problèmes et ainsi mieux se préparer (analyse prédictive).
-L’objectif est d’aider votre manager à la prise de décision.· Votre rôle est de donner le maximum d’éléments (reporting à partir des données du passé) pour prédire les problèmes et ainsi mieux se préparer (analyse prédictive). L’objectif est d’aider votre manager à la prise de décision.
+L’objectif est d’aider votre manager à la prise de décision.· Votre rôle est aussi de donner le maximum d’éléments (reporting à partir des données du passé) pour prédire les problèmes et ainsi mieux se préparer (analyse prédictive). L’objectif est d’aider votre manager à la prise de décision.
 
 ### Version
 
